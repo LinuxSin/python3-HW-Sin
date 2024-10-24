@@ -28,7 +28,7 @@ def Proizved_Matrix():
 	print('Время работы в миллисекундах: ', res_msec)
 	
 	print('Запись в файл: Смотреть время в файл time.txt')
-	f = open('time.txt', 'w')
+	f = open('time.txt', 'w+')
 	f.write('Время работы МОДУЛЬ_А: ' + str(res_msec) + ' мс' + '\n')
 	f.close()
 	print('\n')
