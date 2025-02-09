@@ -1,0 +1,7 @@
+python3 -m venv .venv  # Создать виртуальное окружение в текущей директории (имя директории .venv)
+source .venv/bin/activate  # Активировать виртуальное окружение
+pip install jupyter  # Установить jupyter в виртуальное окружение
+jupyter notebook     # Запустить jupyter notebook
+
+# Когда закончите работу с проектом:
+deactivate       # Деактивировать виртуальное окружение 
