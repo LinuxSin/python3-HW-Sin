@@ -1,52 +1,61 @@
+import tkinter as tk
 import customtkinter as ctk
-from tkinter import messagebox
-from internal.command_handler import Command_handler
 
 class ImageTypeWin(ctk.CTkToplevel):
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.parent = parent
+    def __init__(self, root):
+        super().__init__(root)
+        
         self.title("Выбор типа изображений")
-        self.geometry("300x200")
-        self.resizable(False, False)
+        self.minsize(width=300, height=200)
         
-        # Делаем окно модальным после отображения
-        self.after(100, self._make_modal)
+        # Создаем основной фрейм для кнопок
+        button_frame = ctk.CTkFrame(self)
+        button_frame.pack(pady=20, padx=20, fill="both", expand=True)
         
-        self._create_widgets()
-    
-    def _make_modal(self):
-        self.grab_set()
-        self.focus_set()
-    
-    def _create_widgets(self):
-        ctk.CTkLabel(self, text="Выберите тип изображений:").pack(pady=10)
+        # Настройки для всех кнопок
+        button_options = {
+            'master': button_frame,
+            'width': 200,  # Фиксированная ширина для всех кнопок
+            'height': 40,  # Фиксированная высота для всех кнопок
+            'corner_radius': 6,
+            'font': ('Arial', 14)
+        }
         
-        # Кнопка для загруженных изображений
+        # Кнопки для выбора типа изображений
         ctk.CTkButton(
-            self,
-            text="Загруженные",
-            command=lambda: self._show_images(Command_handler().get_images())
-        ).pack(pady=5)
+            **button_options,
+            text="Загруженные изображения",
+            command=lambda: self.show_images("loaded")
+        ).pack(pady=10, fill="x")
         
-        # Кнопка для сгенерированных изображений
         ctk.CTkButton(
-            self,
-            text="Сгенерированные",
-            command=lambda: self._show_images(Command_handler().get_generated_images())
-        ).pack(pady=5)
+            **button_options,
+            text="Сгенерированные изображения",
+            command=lambda: self.show_images("generated")
+        ).pack(pady=10, fill="x")
         
-        # Кнопка для аугментированных изображений
         ctk.CTkButton(
-            self,
-            text="Аугментированные",
-            command=lambda: self._show_images(Command_handler().get_augmentation_images())
-        ).pack(pady=5)
+            **button_options,
+            text="Аугментированные изображения",
+            command=lambda: self.show_images("augmented")
+        ).pack(pady=10, fill="x")
     
-    def _show_images(self, images):
-        if images:
-            from ui.gallery_win import Gallery_win
-            Gallery_win(self.parent, images)
-            self.destroy()
+    def show_images(self, img_type):
+        from internal.command_handler import Command_handler
+        from ui.gallery_win import Gallery_win
+        import tkinter.messagebox as msg
+        
+        data = None
+        handler = Command_handler()
+        
+        if img_type == "loaded":
+            data = handler.get_images()
+        elif img_type == "generated":
+            data = handler.get_generated_images()
+        elif img_type == "augmented":
+            data = handler.get_augmentation_images()
+        
+        if data:
+            Gallery_win(self, data)
         else:
-            messagebox.showwarning("Внимание", "Изображения данного типа отсутствуют")
+            msg.showerror("Ошибка", f"{img_type.capitalize()} изображения отсутствуют!")
