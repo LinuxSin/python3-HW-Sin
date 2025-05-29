@@ -218,43 +218,43 @@ class Command_handler:
 
 
 
-  def generate(self, img_size, nof_imgs, nof_cells):
-    """Генерация изображений с использованием Image_generator"""
-    try:
-        from internal.image_processor.generator import Image_generator
+  # def generate(self, img_size, nof_imgs, nof_cells):
+  #   """Генерация изображений с использованием Image_generator"""
+  #   try:
+  #       from internal.image_processor.generator import Image_generator
         
-        self.__log(f"Начало генерации: {nof_imgs} изображений {img_size}")
+  #       self.__log(f"Начало генерации: {nof_imgs} изображений {img_size}")
         
-        generator = Image_generator()
-        generator.generate(
-            img_size=img_size,
-            nof_imgs=nof_imgs,
-            nof_cells=nof_cells
-        )
+  #       generator = Image_generator()
+  #       generator.generate(
+  #           img_size=img_size,
+  #           nof_imgs=nof_imgs,
+  #           nof_cells=nof_cells
+  #       )
         
-        self.__generated_images = generator.get_gens()
+  #       self.__generated_images = generator.get_gens()
         
-        if not self.__generated_images:
-            raise Exception("Генератор не вернул изображения")
+  #       if not self.__generated_images:
+  #           raise Exception("Генератор не вернул изображения")
             
-        self.__log(f"Успешно сгенерировано {len(self.__generated_images)} изображений")
-        return True
+  #       self.__log(f"Успешно сгенерировано {len(self.__generated_images)} изображений")
+  #       return True
         
-    except Exception as e:
-        self.__log(f"Ошибка генерации: {str(e)}", error=True)
-        return False
+  #   except Exception as e:
+  #       self.__log(f"Ошибка генерации: {str(e)}", error=True)
+  #       return False
 
-  def get_generated_images(self):
-    """Возвращает сгенерированные изображения"""
-    return getattr(self, '_Command_handler__generated_images', None)
-  def __init__(self, logbox=None):
-    self.__logbox = logbox  # Сохраняем ссылку на текстовое поле для логов
-    self.__img_generator = Image_generator()
-    self.__generated_images = None
+  # def get_generated_images(self):
+  #   """Возвращает сгенерированные изображения"""
+  #   return getattr(self, '_Command_handler__generated_images', None)
+  # def __init__(self, logbox=None):
+  #   self.__logbox = logbox  # Сохраняем ссылку на текстовое поле для логов
+  #   self.__img_generator = Image_generator()
+  #   self.__generated_images = None
 
-  def __log(self, message, error=False):
-    """Логирование сообщений"""
-    if self.__logbox:
-        tag = "ERROR" if error else "INFO"
-        self.__logbox.insert("end", f"[{tag}] {message}\n")
-        self.__logbox.see("end")
+  # def __log(self, message, error=False):
+  #   """Логирование сообщений"""
+  #   if self.__logbox:
+  #       tag = "ERROR" if error else "INFO"
+  #       self.__logbox.insert("end", f"[{tag}] {message}\n")
+  #       self.__logbox.see("end")
