@@ -179,27 +179,3 @@ class Gallery_win(ctk.CTkToplevel):
     self.__img_fld.configure(image=img)
 
 
-
-  # def update_gallery(self):
-  #   # Очищаем текущие изображения
-  #   for widget in self.scrollable_frame.winfo_children():
-  #       widget.destroy()
-    
-  #   # Загружаем новые изображения
-  #   gens = Command_handler().get_generator().get_gens()
-  #   if gens:
-  #       for img_path in gens:
-  #           self.add_image_to_gallery(img_path)
-  def show_generated_images(self):
-    """Показывает сгенерированные изображения"""
-    images = Command_handler().get_generated_images()
-    if images:
-        # Очищаем текущие изображения
-        for widget in self.scrollable_frame.winfo_children():
-            widget.destroy()
-        
-        # Добавляем новые изображения
-        for img_path in images:
-            self.add_image_to_gallery(img_path)
-    else:
-        messagebox.showwarning("Внимание", "Нет сгенерированных изображений")
